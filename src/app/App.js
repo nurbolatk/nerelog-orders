@@ -3,6 +3,7 @@ import './App.css'
 import { filterData } from 'filterData/workerized-filter-data'
 import { useAsync, useCombobox } from 'shared/utils'
 import { List } from 'shared/ui'
+import { useVirtual } from 'react-virtual'
 
 function App() {
   const { data, run } = useAsync()
@@ -13,6 +14,14 @@ function App() {
 
   const [inputValue, setInputValue] = React.useState('')
   const listRef = React.useRef()
+
+  const rowVirtualizer = useVirtual({
+    size: data.orders.length,
+    parentRef: listRef,
+    estimateSize: React.useCallback(() => 20, []),
+    overscan: 10,
+  })
+
   const {
     selectedItem,
     highlightedIndex,
