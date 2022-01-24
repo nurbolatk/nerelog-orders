@@ -9,18 +9,18 @@ export function ListItem({
   style,
   ...props
 }) {
-  return (
-    <li
-      {...getItemProps({
-        index,
-        item,
-        style: {
-          backgroundColor: isHighlighted ? 'lightgray' : 'inherit',
-          fontWeight: isSelected ? 'bold' : 'normal',
-          ...style,
-        },
-        ...props,
-      })}
-    />
-  )
+  const itemProps = {
+    ...getItemProps({
+      index,
+      item,
+      style: {
+        backgroundColor: isHighlighted ? 'lightgray' : 'inherit',
+        fontWeight: isSelected ? 'bold' : 'normal',
+        ...style,
+      },
+      ...props,
+    }),
+  }
+
+  return <li {...itemProps} />
 }

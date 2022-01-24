@@ -2,11 +2,14 @@ import React, { useEffect } from 'react'
 import './App.css'
 import { filterData } from 'filterData/workerized-filter-data'
 import { useAsync, useCombobox } from 'shared/utils'
-import { List } from 'shared/ui'
 import { useVirtual } from 'react-virtual'
+import { List } from '../shared/ui'
 
 function App() {
-  const { data, run } = useAsync()
+  const { data, run } = useAsync({
+    data: [],
+    status: 'pending',
+  })
 
   useEffect(() => {
     run(filterData())
@@ -16,7 +19,7 @@ function App() {
   const listRef = React.useRef()
 
   const rowVirtualizer = useVirtual({
-    size: data.orders.length,
+    size: data.length,
     parentRef: listRef,
     estimateSize: React.useCallback(() => 20, []),
     overscan: 10,
@@ -32,18 +35,17 @@ function App() {
     getMenuProps,
     selectItem,
   } = useCombobox({
-    items: data.orders,
+    items: data,
     inputValue,
     onInputValueChange: ({ inputValue: newValue }) => setInputValue(newValue),
     onSelectedItemChange: ({ selectedItem }) =>
-      alert(selectedItem ? `You selected ${selectedItem.name}` : 'Selection Cleared'),
-    itemToString: (item) => (item ? item.name : ''),
+      alert(selectedItem ? `You selected ${selectedItem.type}` : 'Selection Cleared'),
+    itemToString: (item) => (item ? item.type : ''),
     scrollIntoView: () => {},
     onHighlightedIndexChange: ({ highlightedIndex }) =>
       highlightedIndex !== -1 && rowVirtualizer.scrollToIndex(highlightedIndex),
   })
 
-  // console.log('app.jsx', data.orders)
   return (
     <div>
       <div>
@@ -55,7 +57,7 @@ function App() {
           </button>
         </div>
         <List
-          items={data.orders}
+          items={data}
           getMenuProps={getMenuProps}
           getItemProps={getItemProps}
           highlightedIndex={highlightedIndex}

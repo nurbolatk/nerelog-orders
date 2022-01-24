@@ -16,6 +16,7 @@ function useCombobox(options = {}) {
           inputValue: itemToString(state.selectedItem),
         }
       }
+      return changes
     },
     ...options,
   })

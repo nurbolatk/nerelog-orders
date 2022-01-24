@@ -35,7 +35,7 @@ export function List({
             isSelected={selectedItem?.id === item.id}
             isHighlighted={highlightedIndex === index}
             style={getVirtualRowStyles({ size, start })}>
-            {item.name}
+            {item.type}
           </ListItem>
         )
       })}
