@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ListItem } from 'shared/ui'
+import { ListItem } from 'components/atoms'
 
 const getVirtualRowStyles = ({ size, start }) => ({
   position: 'absolute',

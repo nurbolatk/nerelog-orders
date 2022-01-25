@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import './App.css'
-import { filterData } from 'filterData/workerized-filter-data'
-import { useAsync, useCombobox } from 'shared/utils'
+import { filterData } from 'webWorker/filterData/workerizedFilterData'
+import { useAsync, useCombobox } from 'utils'
 import { useVirtual } from 'react-virtual'
-import { List } from '../shared/ui'
+import { List } from 'components/molecules'
 
 function App() {
   const { data, run } = useAsync({
