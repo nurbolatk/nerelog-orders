@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import './App.css'
+import './styles/index.css'
 import { filterData } from 'webWorker/filterData/workerizedFilterData'
 import { useAsync, useCombobox } from 'utils'
 import { useVirtual } from 'react-virtual'
@@ -48,6 +48,7 @@ function App() {
 
   return (
     <div>
+      <h2 className="text-3xl font-bold underline">hi</h2>
       <div>
         <label {...getLabelProps()}>Find a city</label>
         <div {...getComboboxProps()}>
