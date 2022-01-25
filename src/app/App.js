@@ -47,9 +47,9 @@ function App() {
   })
 
   return (
-    <div>
+    <main className="p-4">
       <h2 className="text-3xl font-bold underline">hi</h2>
-      <div>
+      <div className="card max-w-7xl mx-auto h-[90vh]">
         <label {...getLabelProps()}>Find a city</label>
         <div {...getComboboxProps()}>
           <input {...getInputProps({ type: 'text' })} />
@@ -57,18 +57,18 @@ function App() {
             &#10005;
           </button>
         </div>
-        <List
-          items={data}
-          getMenuProps={getMenuProps}
-          getItemProps={getItemProps}
-          highlightedIndex={highlightedIndex}
-          selectedItem={selectedItem}
-          listRef={listRef}
-          virtualRows={rowVirtualizer.virtualItems}
-          totalHeight={rowVirtualizer.totalSize}
-        />
+          <List
+            items={data}
+            getMenuProps={getMenuProps}
+            getItemProps={getItemProps}
+            highlightedIndex={highlightedIndex}
+            selectedItem={selectedItem}
+            listRef={listRef}
+            virtualRows={rowVirtualizer.virtualItems}
+            totalHeight={rowVirtualizer.totalSize}
+          />
       </div>
-    </div>
+    </main>
   )
 }
 

@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  @apply min-h-screen bg-zinc-100;
+}
+
+.card {
+  @apply bg-white rounded-sm shadow-lg p-4;
+}

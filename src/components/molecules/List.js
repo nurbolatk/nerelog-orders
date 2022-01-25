@@ -19,7 +19,9 @@ export function List({
   listRef,
   virtualRows,
   totalHeight,
+  className,
 }) {
+
   return (
     <ul {...getMenuProps({ ref: listRef })}>
       <li style={{ height: totalHeight }} />
