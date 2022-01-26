@@ -48,25 +48,25 @@ function App() {
 
   return (
     <main className="p-4">
-      <h2 className="text-3xl font-bold underline">hi</h2>
-      <div className="card max-w-7xl mx-auto h-[90vh]">
+      <div className="card max-w-7xl mx-auto">
         <label {...getLabelProps()}>Find a city</label>
         <div {...getComboboxProps()}>
-          <input {...getInputProps({ type: 'text' })} />
+          <input {...getInputProps({ type: 'text' })} className="input" />
           <button onClick={() => selectItem(null)} aria-label="toggle menu">
             &#10005;
           </button>
         </div>
-          <List
-            items={data}
-            getMenuProps={getMenuProps}
-            getItemProps={getItemProps}
-            highlightedIndex={highlightedIndex}
-            selectedItem={selectedItem}
-            listRef={listRef}
-            virtualRows={rowVirtualizer.virtualItems}
-            totalHeight={rowVirtualizer.totalSize}
-          />
+        <List
+          items={data}
+          getMenuProps={getMenuProps}
+          getItemProps={getItemProps}
+          highlightedIndex={highlightedIndex}
+          selectedItem={selectedItem}
+          listRef={listRef}
+          virtualRows={rowVirtualizer.virtualItems}
+          totalHeight={rowVirtualizer.totalSize}
+          className="relative overflow-y-auto max-h-[80vh]"
+        />
       </div>
     </main>
   )

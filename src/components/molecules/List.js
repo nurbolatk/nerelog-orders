@@ -19,11 +19,10 @@ export function List({
   listRef,
   virtualRows,
   totalHeight,
-  className,
+  ...props
 }) {
-
   return (
-    <ul {...getMenuProps({ ref: listRef })}>
+    <ul {...getMenuProps({ ref: listRef })} {...props}>
       <li style={{ height: totalHeight }} />
       {virtualRows.map(({ index, size, start }) => {
         const item = items[index]
