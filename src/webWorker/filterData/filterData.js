@@ -6,10 +6,12 @@ function parseData() {
   for (const client of clients) {
     clientsMapped.set(client.id, client)
   }
-  return orders.map((order) => ({
-    ...order,
-    client: clientsMapped.get(order.client_id),
-  }))
+  return orders.map((order) => {
+    return {
+      ...order,
+      client: clientsMapped.get(order.client_id),
+    }
+  })
 }
 
 function filterData(event) {
