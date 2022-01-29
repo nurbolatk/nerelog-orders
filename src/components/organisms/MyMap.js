@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useImperativeHandle, useRef } from 'react'
 // Import CSS from Leaflet and plugins.
 import 'leaflet/dist/leaflet.css'
 import 'leaflet.markercluster/dist/MarkerCluster.css'
@@ -9,9 +9,19 @@ import 'leaflet/dist/images/marker-shadow.png'
 // Import JS from Leaflet and plugins.
 import { Map, TileLayer } from 'leaflet'
 
-function MyMap({ markers }) {
+function MyMap({ markers }, externalRef) {
   const containerRef = useRef()
   const mapRef = useRef()
+
+  function panToMarker(index) {
+    console.log(index)
+    mapRef.current.setView([43.24, 76.89], 18)
+    // markersRef.current[index].openPopup()
+  }
+
+  useImperativeHandle(externalRef, () => ({
+    panToMarker,
+  }))
 
   useEffect(() => {
     const instance = new Map('my-map', {
@@ -34,7 +44,7 @@ function MyMap({ markers }) {
       }
     )
     tileLayer.addTo(instance)
-    mapRef.current = tileLayer
+    mapRef.current = instance
   }, [])
   console.log({ containerRef, mapRef, l: markers.length })
 
@@ -45,5 +55,6 @@ function MyMap({ markers }) {
   )
 }
 // eslint-disable-next-line no-func-assign
-MyMap = React.memo(MyMap)
+MyMap = React.memo(React.forwardRef(MyMap))
+
 export { MyMap }

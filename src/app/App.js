@@ -18,6 +18,8 @@ function App() {
 
   const [inputValue, setInputValue] = React.useState('')
   const listRef = React.useRef()
+  const mapRef = React.useRef()
+  console.log({ mapRef })
 
   const rowVirtualizer = useVirtual({
     size: data.length,
@@ -39,8 +41,9 @@ function App() {
     items: data,
     inputValue,
     onInputValueChange: ({ inputValue: newValue }) => setInputValue(newValue),
-    onSelectedItemChange: ({ selectedItem }) =>
-      alert(selectedItem ? `You selected ${selectedItem.type}` : 'Selection Cleared'),
+    onSelectedItemChange: ({ selectedItem }) => {
+      mapRef.current.panToMarker(99)
+    },
     itemToString: (item) => (item ? item.type : ''),
     scrollIntoView: () => {},
     onHighlightedIndexChange: ({ highlightedIndex }) =>
@@ -72,7 +75,7 @@ function App() {
         </div>
         <div className="relative">
           {/*<Map markers={data} />*/}
-          <MyMap markers={data} />
+          <MyMap markers={data} ref={mapRef} />
         </div>
       </div>
     </main>
