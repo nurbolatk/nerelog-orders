@@ -4,7 +4,7 @@ import { filterData } from 'webWorker/filterData/workerizedFilterData'
 import { useAsync, useCombobox } from 'utils'
 import { useVirtual } from 'react-virtual'
 import { List } from 'components/molecules'
-import { Map } from '../components/organisms'
+import { MyMap } from 'components/organisms'
 
 function App() {
   const { data, run } = useAsync({
@@ -71,7 +71,8 @@ function App() {
           />
         </div>
         <div className="relative">
-          <Map markers={data} />
+          {/*<Map markers={data} />*/}
+          <MyMap markers={data} />
         </div>
       </div>
     </main>
