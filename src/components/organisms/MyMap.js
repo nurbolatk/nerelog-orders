@@ -7,16 +7,25 @@ import 'leaflet.markercluster/dist/MarkerCluster.Default.css'
 import 'leaflet/dist/images/marker-icon-2x.png'
 import 'leaflet/dist/images/marker-shadow.png'
 // Import JS from Leaflet and plugins.
-import { Map, TileLayer } from 'leaflet'
+import * as L from 'leaflet'
+import { MarkerClusterGroup } from 'leaflet.markercluster/src'
+
+const icon = L.divIcon({
+  className: 'border-0 bg-transparent',
+  html: '<div class="h-4 w-4 rounded-full bg-red-500"></div>',
+})
 
 function MyMap({ markers }, externalRef) {
-  const containerRef = useRef()
   const mapRef = useRef()
+  const markersRef = useRef()
 
   function panToMarker(index) {
-    console.log(index)
-    mapRef.current.setView([43.24, 76.89], 18)
-    // markersRef.current[index].openPopup()
+    const theMarker = markersRef.current.get(index)
+    if (theMarker) {
+      const coords = theMarker.getLatLng()
+      mapRef.current.setView(coords, 18)
+      theMarker.openPopup()
+    }
   }
 
   useImperativeHandle(externalRef, () => ({
@@ -24,13 +33,13 @@ function MyMap({ markers }, externalRef) {
   }))
 
   useEffect(() => {
-    const instance = new Map('my-map', {
+    const instance = new L.Map('my-map', {
       center: [43.238949, 76.889709],
       zoom: 13,
       maxZoom: 18,
     })
 
-    const tileLayer = new TileLayer(
+    const tileLayer = new L.TileLayer(
       'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibnVyYm9sYXRrIiwiYSI6ImNreXp2bHhobjBpOW0yb28xNDJzeTBrcW4ifQ.02IOXMz2XFrp1Y2pooHqpQ',
       {
         attribution:
@@ -46,7 +55,31 @@ function MyMap({ markers }, externalRef) {
     tileLayer.addTo(instance)
     mapRef.current = instance
   }, [])
-  console.log({ containerRef, mapRef, l: markers.length })
+
+  useEffect(() => {
+    if (mapRef.current !== undefined) {
+      const cluster = new MarkerClusterGroup({
+        disableClusteringAtZoom: 17,
+      })
+
+      markersRef.current = markers.reduce((map, order) => {
+        const coords = [order.coords.lat, order.coords.long]
+        const marker = new L.Marker(coords, {
+          icon,
+        })
+        marker.bindPopup('<p>Hello world!<br />This is a nice popup.</p>')
+        cluster.addLayer(marker)
+        map.set(order.id, marker)
+        return map
+      }, new Map())
+
+      cluster.on('click', (a) => {
+        a.layer.openPopup(a.layer.getLatLng())
+      })
+
+      cluster.addTo(mapRef.current)
+    }
+  }, [markers])
 
   return (
     <div id="my-map" className="h-[88vh]">

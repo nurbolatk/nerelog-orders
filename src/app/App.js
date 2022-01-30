@@ -42,7 +42,7 @@ function App() {
     inputValue,
     onInputValueChange: ({ inputValue: newValue }) => setInputValue(newValue),
     onSelectedItemChange: ({ selectedItem }) => {
-      mapRef.current.panToMarker(99)
+      mapRef.current.panToMarker(selectedItem.id)
     },
     itemToString: (item) => (item ? item.type : ''),
     scrollIntoView: () => {},
