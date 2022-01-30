@@ -14,7 +14,6 @@ function App() {
   })
 
   const [inputValue, setInputValue] = React.useState('contract')
-  console.log({ data, inputValue })
 
   useEffect(() => {
     run(filterData(inputValue))
@@ -59,7 +58,7 @@ function App() {
             <input {...getInputProps({ type: 'text' })} className="input !pr-7" />
             <button
               type="button"
-              onClick={() => selectItem(null)}
+              onClick={() => selectItem('')}
               className="absolute right-2.5 top-1/2 -translate-y-1/2">
               &#10005;
             </button>

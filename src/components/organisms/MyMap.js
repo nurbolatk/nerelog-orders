@@ -18,14 +18,19 @@ const icon = L.divIcon({
 function MyMap({ markers }, externalRef) {
   const mapRef = useRef()
   const markersRef = useRef()
-  console.log(markers.length)
 
   function panToMarker(index) {
     const theMarker = markersRef.current.get(index)
     if (theMarker) {
       const coords = theMarker.getLatLng()
       mapRef.current.setView(coords, 18)
-      theMarker.openPopup()
+      setTimeout(() => {
+        if (theMarker._map === null) {
+          mapRef.current.openPopup(theMarker._popup)
+        } else {
+          theMarker.openPopup()
+        }
+      }, 200)
     }
   }
 
@@ -64,22 +69,29 @@ function MyMap({ markers }, externalRef) {
         disableClusteringAtZoom: 17,
       })
 
-      markersRef.current = markers.reduce((map, order) => {
+      markersRef.current = markers.reduce((markersMap, order) => {
         const marker = new L.Marker(order.coords, {
           icon,
         })
-        marker.bindPopup('<p>Hello world!<br />This is a nice popup.</p>')
+        marker.bindPopup(`
+          <p class="text-secondary">
+            Order No <span class="font-bold">${order.id}</span>
+          </p>
+          <p>${order.client.name}</p>
+          <p>$${order.price}</p>
+        `)
+
         cluster.addLayer(marker)
-        map.set(order.id, marker)
-        return map
+        markersMap.set(order.id, marker)
+        return markersMap
       }, new Map())
 
       cluster.on('click', (a) => {
         console.log('cluster clicked')
         a.layer.openPopup(a.layer.getLatLng())
       })
-
       cluster.addTo(mapRef.current)
+
       return () => cluster.removeFrom(mapRef.current)
     }
   }, [markers])
