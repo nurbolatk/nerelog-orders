@@ -1,4 +1,5 @@
 import * as React from 'react'
+import cn from 'classnames'
 
 export function ListItem({
   getItemProps,
@@ -25,11 +26,14 @@ export function ListItem({
   return (
     <li {...itemProps}>
       <div ref={measureRef} className="pb-2">
-        <div className="border border-slate-200 p-4 rounded-md">
+        <div
+          className={`border border-slate-200 p-4 rounded-md ${
+            isHighlighted ? 'cursor-pointer' : ''
+          } ${isSelected ? 'border-blue-500' : ''}`}>
           <p className="text-secondary">
             Order No <span className="font-bold">${item.id}</span>
           </p>
-          <hr className="my-4" />
+          <hr className={cn('my-4', { 'border-blue-500': isSelected })} />
           <div className="grid grid-cols-2">
             <p className="text-zinc-600">Client:</p>
             <p>{item.client.name}</p>
@@ -56,7 +60,7 @@ export function ListItem({
               </svg>
             </p>
           </div>
-          <hr className="my-4" />
+          <hr className={cn('my-4', { 'border-blue-500': isSelected })} />
 
           <div className="grid grid-cols-2">
             <p>Total:</p>
