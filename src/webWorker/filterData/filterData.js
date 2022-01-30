@@ -1,5 +1,5 @@
-import orders from 'data/2000/NeRelog_apps.json'
-import clients from 'data/2000/NeRelog_clients.json'
+import orders from 'data/5000/NeRelog_apps.json'
+import clients from 'data/5000/NeRelog_clients.json'
 import { matchSorter } from 'match-sorter'
 
 function parseData() {
