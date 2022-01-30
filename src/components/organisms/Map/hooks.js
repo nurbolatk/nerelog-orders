@@ -3,19 +3,22 @@ import * as L from 'leaflet'
 import { MarkerClusterGroup } from 'leaflet.markercluster/src'
 import { DeliveryPinIcon } from 'components/icons'
 
+const center = [process.env.REACT_APP_MAP_CENTER_LAT, process.env.REACT_APP_MAP_CENTER_LNG]
+const accessToken = process.env.REACT_APP_ACCESS_TOKEN
+
 function useMap(id) {
   const mapRef = useRef()
 
   useEffect(() => {
     if (!mapRef.current) {
       const instance = new L.Map(id, {
-        center: [43.238949, 76.889709],
+        center,
         zoom: 13,
         maxZoom: 18,
       })
 
       const tileLayer = new L.TileLayer(
-        'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibnVyYm9sYXRrIiwiYSI6ImNreXp2bHhobjBpOW0yb28xNDJzeTBrcW4ifQ.02IOXMz2XFrp1Y2pooHqpQ',
+        `https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${accessToken}`,
         {
           attribution:
             'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -23,8 +26,7 @@ function useMap(id) {
           id: 'mapbox/streets-v11',
           tileSize: 512,
           zoomOffset: -1,
-          accessToken:
-            'pk.eyJ1IjoibnVyYm9sYXRrIiwiYSI6ImNreXp2bHhobjBpOW0yb28xNDJzeTBrcW4ifQ.02IOXMz2XFrp1Y2pooHqpQ',
+          accessToken,
         }
       )
       tileLayer.addTo(instance)
