@@ -13,3 +13,7 @@ body {
 .input {
    @apply appearance-none px-2.5 py-2 bg-stone-200 rounded-sm w-full outline-0 focus-visible:ring-2 ring-sky-500;
 }
+
+.text-secondary {
+    @apply text-sm text-zinc-600;
+}

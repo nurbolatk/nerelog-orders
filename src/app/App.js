@@ -24,7 +24,7 @@ function App() {
   const rowVirtualizer = useVirtual({
     size: data.length,
     parentRef: listRef,
-    estimateSize: React.useCallback(() => 20, []),
+    estimateSize: React.useCallback(() => 256, []),
     overscan: 10,
   })
 

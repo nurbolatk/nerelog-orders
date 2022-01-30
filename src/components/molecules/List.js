@@ -24,7 +24,7 @@ export function List({
   return (
     <ul {...getMenuProps({ ref: listRef })} {...props}>
       <li style={{ height: totalHeight }} />
-      {virtualRows.map(({ index, size, start }) => {
+      {virtualRows.map(({ index, size, start, measureRef }) => {
         const item = items[index]
         if (!item) return null
         return (
@@ -33,6 +33,8 @@ export function List({
             getItemProps={getItemProps}
             item={item}
             index={index}
+            size={size}
+            measureRef={measureRef}
             isSelected={selectedItem?.id === item.id}
             isHighlighted={highlightedIndex === index}
             style={getVirtualRowStyles({ size, start })}>
