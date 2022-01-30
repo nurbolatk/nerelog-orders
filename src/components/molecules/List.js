@@ -12,32 +12,30 @@ const getVirtualRowStyles = ({ size, start }) => ({
 
 export function List({
   items,
-  getMenuProps,
-  getItemProps,
-  highlightedIndex,
-  selectedItem,
   listRef,
   virtualRows,
+  selectedItem,
+  onItemClick,
   totalHeight,
-  className,
+  children,
+  ...props
 }) {
-
   return (
-    <ul {...getMenuProps({ ref: listRef })}>
+    <ul {...props} ref={listRef}>
       <li style={{ height: totalHeight }} />
-      {virtualRows.map(({ index, size, start }) => {
+      {virtualRows.map(({ index, size, start, measureRef }) => {
         const item = items[index]
         if (!item) return null
         return (
           <ListItem
             key={item.id}
-            getItemProps={getItemProps}
             item={item}
-            index={index}
+            size={size}
+            onClick={onItemClick}
+            measureRef={measureRef}
             isSelected={selectedItem?.id === item.id}
-            isHighlighted={highlightedIndex === index}
             style={getVirtualRowStyles({ size, start })}>
-            {item.type}
+            {children}
           </ListItem>
         )
       })}

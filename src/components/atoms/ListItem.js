@@ -1,26 +1,20 @@
 import * as React from 'react'
+import { useCallback } from 'react'
 
-export function ListItem({
-  getItemProps,
-  item,
-  index,
-  isHighlighted,
-  isSelected,
-  style,
-  ...props
-}) {
-  const itemProps = {
-    ...getItemProps({
-      index,
-      item,
-      style: {
-        backgroundColor: isHighlighted ? 'lightgray' : 'inherit',
-        fontWeight: isSelected ? 'bold' : 'normal',
-        ...style,
-      },
-      ...props,
-    }),
-  }
+export function ListItem({ item, isSelected, onClick, measureRef, children, ...props }) {
+  const handleItemClick = useCallback(() => {
+    onClick(item)
+  }, [item, onClick])
 
-  return <li {...itemProps} />
+  return (
+    <li {...props}>
+      <div ref={measureRef} className="pb-2">
+        {React.cloneElement(children, {
+          onClick: handleItemClick,
+          item,
+          isSelected,
+        })}
+      </div>
+    </li>
+  )
 }
