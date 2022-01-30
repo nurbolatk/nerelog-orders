@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import * as L from 'leaflet'
 import { MarkerClusterGroup } from 'leaflet.markercluster/src'
-import { icon } from 'components/icons'
+import { DeliveryPinIcon } from 'components/icons'
 
 function useMap(id) {
   const mapRef = useRef()
@@ -59,7 +59,7 @@ function useCluster(markers, mapRef, onMarkerClick) {
       // add markers to cluster and save to markersRef
       markersRef.current = markers.reduce((markersMap, order, index) => {
         const marker = new L.Marker(order.coords, {
-          icon,
+          icon: DeliveryPinIcon(order.isPickup),
           order,
           index,
         })

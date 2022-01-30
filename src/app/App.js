@@ -54,7 +54,7 @@ function App() {
             onItemClick={handleItemClick}
             virtualRows={rowVirtualizer.virtualItems}
             totalHeight={rowVirtualizer.totalSize}
-            className="relative overflow-y-auto h-[40vh] lg:h-[80vh]">
+            className="relative overflow-y-auto h-[40vh] lg:h-[82vh]">
             <OrderListItem />
           </List>
         </div>
