@@ -81,11 +81,7 @@ function MyMap({ markers }, externalRef) {
     }
   }, [markers])
 
-  return (
-    <div id="my-map" className="h-[88vh]">
-      hi
-    </div>
-  )
+  return <div id="my-map" className="h-full" />
 }
 // eslint-disable-next-line no-func-assign
 MyMap = React.memo(React.forwardRef(MyMap))

@@ -24,7 +24,7 @@ function App() {
   const rowVirtualizer = useVirtual({
     size: data.length,
     parentRef: listRef,
-    estimateSize: React.useCallback(() => 256, []),
+    estimateSize: React.useCallback(() => 232, []),
     overscan: 10,
   })
 
@@ -52,8 +52,8 @@ function App() {
 
   return (
     <main className="p-4">
-      <div className="card max-w-7xl mx-auto grid grid-cols-2">
-        <div>
+      <div className="card max-w-7xl mx-auto grid grid-cols-3 gap-8 overflow-hidden">
+        <div className="col-span-1">
           <label {...getLabelProps()}>Find a city</label>
           <div {...getComboboxProps()}>
             <input {...getInputProps({ type: 'text' })} className="input" />
@@ -70,10 +70,10 @@ function App() {
             listRef={listRef}
             virtualRows={rowVirtualizer.virtualItems}
             totalHeight={rowVirtualizer.totalSize}
-            className="relative overflow-y-auto max-h-[80vh]"
+            className="relative overflow-y-auto h-[80vh]"
           />
         </div>
-        <div className="relative">
+        <div className="relative col-span-2 -m-4 overflow-hidden">
           {/*<Map markers={data} />*/}
           <MyMap markers={data} ref={mapRef} />
         </div>
