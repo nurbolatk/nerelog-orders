@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react'
 import './styles/index.css'
 import { filterData } from 'webWorker/filterData/workerizedFilterData'
 import { useAsync } from 'utils'
-import { List } from 'components/molecules'
+import { List, OrderListItem } from 'components/molecules'
 import { Map } from 'components/organisms'
 import { useInputValue, useVirtualList } from './hooks'
 import { SearchInput } from 'components/atoms'
@@ -54,8 +54,9 @@ function App() {
             onItemClick={handleItemClick}
             virtualRows={rowVirtualizer.virtualItems}
             totalHeight={rowVirtualizer.totalSize}
-            className="relative overflow-y-auto h-[40vh] lg:h-[80vh]"
-          />
+            className="relative overflow-y-auto h-[40vh] lg:h-[80vh]">
+            <OrderListItem />
+          </List>
         </div>
         <div className="relative lg:col-span-2 lg:col-start-2 -m-4 overflow-hidden row-start-1 row-end-2">
           <Map markers={data} ref={mapRef} onMarkerClick={handleMarkerClick} />

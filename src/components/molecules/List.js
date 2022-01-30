@@ -17,6 +17,7 @@ export function List({
   selectedItem,
   onItemClick,
   totalHeight,
+  children,
   ...props
 }) {
   return (
@@ -34,7 +35,7 @@ export function List({
             measureRef={measureRef}
             isSelected={selectedItem?.id === item.id}
             style={getVirtualRowStyles({ size, start })}>
-            {item.id}
+            {children}
           </ListItem>
         )
       })}
