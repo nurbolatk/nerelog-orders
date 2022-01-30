@@ -22,7 +22,6 @@ export function ListItem({
       ...props,
     }),
   }
-  console.log({ isHighlighted, isSelected })
 
   return (
     <li {...itemProps}>

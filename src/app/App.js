@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
 import './styles/index.css'
 import { filterData } from 'webWorker/filterData/workerizedFilterData'
-import { useAsync, useCombobox } from 'utils'
+import { useAsync } from 'utils'
 import { useVirtual } from 'react-virtual'
 import { List } from 'components/molecules'
 import { MyMap } from 'components/organisms'
+import { useCombobox } from 'downshift'
 
 function App() {
   const { data, run } = useAsync({
@@ -12,14 +13,15 @@ function App() {
     status: 'pending',
   })
 
-  useEffect(() => {
-    run(filterData())
-  }, [run])
+  const [inputValue, setInputValue] = React.useState('contract')
+  console.log({ data, inputValue })
 
-  const [inputValue, setInputValue] = React.useState('')
+  useEffect(() => {
+    run(filterData(inputValue))
+  }, [inputValue, run])
+
   const listRef = React.useRef()
   const mapRef = React.useRef()
-  console.log({ mapRef })
 
   const rowVirtualizer = useVirtual({
     size: data.length,
@@ -41,10 +43,8 @@ function App() {
     items: data,
     inputValue,
     onInputValueChange: ({ inputValue: newValue }) => setInputValue(newValue),
-    onSelectedItemChange: ({ selectedItem }) => {
-      mapRef.current.panToMarker(selectedItem.id)
-    },
-    itemToString: (item) => (item ? item.type : ''),
+    onSelectedItemChange: ({ selectedItem }) => mapRef.current.panToMarker(selectedItem.id),
+    itemToString: (item) => (item ? item.client.name : ''),
     scrollIntoView: () => {},
     onHighlightedIndexChange: ({ highlightedIndex }) =>
       highlightedIndex !== -1 && rowVirtualizer.scrollToIndex(highlightedIndex),
@@ -54,13 +54,16 @@ function App() {
     <main className="p-4">
       <div className="card max-w-7xl mx-auto grid grid-cols-3 gap-8 overflow-hidden">
         <div className="col-span-1">
-          <label {...getLabelProps()}>Find a city</label>
-          <div {...getComboboxProps()}>
-            <input {...getInputProps({ type: 'text' })} className="input" />
-            <button onClick={() => selectItem(null)} aria-label="toggle menu">
+          <label {...getLabelProps()}>Find an order</label>
+          <form {...getComboboxProps()} className="relative mb-4">
+            <input {...getInputProps({ type: 'text' })} className="input !pr-7" />
+            <button
+              type="button"
+              onClick={() => selectItem(null)}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2">
               &#10005;
             </button>
-          </div>
+          </form>
           <List
             items={data}
             getMenuProps={getMenuProps}

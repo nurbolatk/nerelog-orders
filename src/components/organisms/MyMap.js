@@ -18,6 +18,7 @@ const icon = L.divIcon({
 function MyMap({ markers }, externalRef) {
   const mapRef = useRef()
   const markersRef = useRef()
+  console.log(markers.length)
 
   function panToMarker(index) {
     const theMarker = markersRef.current.get(index)
@@ -53,6 +54,7 @@ function MyMap({ markers }, externalRef) {
       }
     )
     tileLayer.addTo(instance)
+
     mapRef.current = instance
   }, [])
 
@@ -73,10 +75,12 @@ function MyMap({ markers }, externalRef) {
       }, new Map())
 
       cluster.on('click', (a) => {
+        console.log('cluster clicked')
         a.layer.openPopup(a.layer.getLatLng())
       })
 
       cluster.addTo(mapRef.current)
+      return () => cluster.removeFrom(mapRef.current)
     }
   }, [markers])
 

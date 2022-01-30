@@ -1,5 +1,6 @@
 import orders from 'data/2000/NeRelog_apps.json'
 import clients from 'data/2000/NeRelog_clients.json'
+import { matchSorter } from 'match-sorter'
 
 function parseData() {
   const clientsMapped = new Map()
@@ -17,13 +18,15 @@ function parseData() {
     }
   })
 }
+const ordersWithClients = parseData()
 
 function filterData(event) {
-  const { id } = event.data
-  const ordersWithClients = parseData()
+  const { id, payload } = event.data
   self.postMessage({
     id,
-    payload: ordersWithClients,
+    payload: matchSorter(ordersWithClients, payload, {
+      keys: ['client.name'],
+    }),
   })
 }
 self.onmessage = filterData
