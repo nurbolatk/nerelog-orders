@@ -1,35 +1,17 @@
 import * as React from 'react'
 import cn from 'classnames'
 import { DeliveryIcon, PickupIcon } from '../icons'
+import { useCallback } from 'react'
 
-export function ListItem({
-  getItemProps,
-  item,
-  index,
-  isHighlighted,
-  isSelected,
-  style,
-  measureRef,
-  ...props
-}) {
-  const itemProps = {
-    ...getItemProps({
-      index,
-      item,
-      style: {
-        ...style,
-      },
-      ...props,
-    }),
-  }
-
+export function ListItem({ item, isSelected, onClick, measureRef, ...props }) {
+  const handleItemClick = useCallback(() => onClick(item), [item, onClick])
   return (
-    <li {...itemProps}>
+    <li {...props}>
       <div ref={measureRef} className="pb-2">
-        <div
-          className={`border border-slate-200 p-4 rounded-md ${
-            isHighlighted ? 'cursor-pointer' : ''
-          } ${isSelected ? 'border-blue-500' : ''}`}>
+        <button
+          onClick={handleItemClick}
+          className={`block text-left w-full border border-slate-200 p-4 rounded-md hover:cursor-pointer
+           ${isSelected ? 'border-blue-500' : ''}`}>
           <p className="text-secondary">
             Order No <span className="font-bold">${item.id}</span>
           </p>
@@ -53,7 +35,7 @@ export function ListItem({
             <p>Total:</p>
             <p>${item.price}</p>
           </div>
-        </div>
+        </button>
       </div>
     </li>
   )
