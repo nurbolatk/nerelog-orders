@@ -80,16 +80,23 @@ function useCluster(markers, mapRef, onMarkerClick) {
 
       // on marker click
       cluster.on('click', (a) => {
-        console.log(a.layer.options, onMarkerClick)
         a.layer.openPopup(a.layer.getLatLng())
         onMarkerClick?.(a.layer.options.order, a.layer.options.index)
+      })
+      // on marker hover
+      cluster.on('mouseover', (a) => {
+        a.layer.openPopup(a.layer.getLatLng())
+      })
+      // on marker hover
+      cluster.on('mouseout', (a) => {
+        a.layer.closePopup()
       })
 
       cluster.addTo(mapRef.current)
       const mapRefValue = mapRef.current
       return () => cluster.removeFrom(mapRefValue)
     }
-  }, [mapRef, markers, onMarkerClick])
+  }, [mapRef, markers])
 
   return { markersRef, panToMarker }
 }
