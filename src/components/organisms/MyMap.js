@@ -63,8 +63,7 @@ function MyMap({ markers }, externalRef) {
       })
 
       markersRef.current = markers.reduce((map, order) => {
-        const coords = [order.coords.lat, order.coords.long]
-        const marker = new L.Marker(coords, {
+        const marker = new L.Marker(order.coords, {
           icon,
         })
         marker.bindPopup('<p>Hello world!<br />This is a nice popup.</p>')

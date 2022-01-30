@@ -7,8 +7,12 @@ function parseData() {
     clientsMapped.set(client.id, client)
   }
   return orders.map((order) => {
+    const coords = [order.coords.lat, order.coords.long]
+    const isPickup = order.type === 'pickup'
     return {
       ...order,
+      coords,
+      isPickup,
       client: clientsMapped.get(order.client_id),
     }
   })
