@@ -98,6 +98,8 @@ function useCluster(markers, mapRef, onMarkerClick) {
       const mapRefValue = mapRef.current
       return () => cluster.removeFrom(mapRefValue)
     }
+    // multiple rerenders if we include onMarkerClick, seems to be a bug of react-virtual
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mapRef, markers])
 
   return { markersRef, panToMarker }
